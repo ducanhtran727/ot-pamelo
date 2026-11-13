@@ -61,6 +61,7 @@ updateCountdown();
 setInterval(updateCountdown, 1000);
 
 const order = document.getElementById("order-dialog");
+const orderThanks = document.getElementById("order-thanks");
 for (const trigger of document.querySelectorAll("[data-open-order]")) {
   const openOrder = () => order.showModal();
   if (trigger instanceof HTMLButtonElement) trigger.addEventListener("click", openOrder);
@@ -109,7 +110,9 @@ form.addEventListener("submit", async event => {
       throw new Error("Order was not confirmed");
     }
     form.reset();
-    orderStatus.textContent = "Đã gửi đơn hàng.";
+    orderStatus.textContent = "";
+    order.close();
+    orderThanks.showModal();
   } catch {
     orderStatus.textContent = "Chưa xác nhận được đơn hàng. Vui lòng kiểm tra lại trước khi gửi lại.";
   } finally {

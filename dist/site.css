@@ -13,11 +13,12 @@ body {
   outline-offset: 2px;
 }
 
-body:has(#order-dialog[open]) {
+body:has(:is(#order-dialog, #order-thanks)[open]) {
   overflow: hidden;
 }
 
-#order-dialog {
+#order-dialog,
+#order-thanks {
   position: fixed;
   inset: 0;
   margin: auto;
@@ -34,8 +35,27 @@ body:has(#order-dialog[open]) {
   font: 14px/1.4 "Open Sans", sans-serif;
 }
 
-#order-dialog::backdrop {
+#order-dialog::backdrop,
+#order-thanks::backdrop {
   background: rgb(22 29 19 / 68%);
+}
+
+#order-thanks {
+  padding: 24px;
+  text-align: center;
+}
+
+#order-thanks-title {
+  font-size: 22px;
+  font-weight: 800;
+}
+
+#order-thanks-message {
+  margin: 8px 0 18px;
+}
+
+#order-thanks .order-submit {
+  width: 100%;
 }
 
 .order-header {
