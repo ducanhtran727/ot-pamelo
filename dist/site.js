@@ -60,46 +60,17 @@ function updateCountdown() {
 updateCountdown();
 setInterval(updateCountdown, 1000);
 
-const order = document.getElementById("w-__popup_default__");
-const backdrop = document.getElementById("popup-backdrop");
-const closeButton = order.querySelector(".order-close");
-let orderTrigger;
-
-function closeOrder() {
-  order.classList.add("d-none");
-  backdrop.classList.add("d-none");
-  document.body.classList.remove("order-open");
-  orderTrigger.focus();
-}
-
+const order = document.getElementById("order-dialog");
 for (const id of ["w-8brm836h", "w-iaxhhk0l"]) {
-  const trigger = document.getElementById(id);
-  makeButton(trigger, "", () => {
-    orderTrigger = trigger;
-    order.classList.remove("d-none");
-    backdrop.classList.remove("d-none");
-    document.body.classList.add("order-open");
-    closeButton.focus();
-  });
+  makeButton(document.getElementById(id), "", () => order.showModal());
 }
 
-closeButton.addEventListener("click", closeOrder);
-backdrop.addEventListener("click", closeOrder);
-document.addEventListener("keydown", event => {
-  if (order.classList.contains("d-none")) return;
-  if (event.key === "Escape") closeOrder();
-  if (event.key !== "Tab") return;
-
-  const focusable = [...order.querySelectorAll("button, input, select")].filter(element => !element.disabled);
-  const first = focusable[0];
-  const last = focusable.at(-1);
-  if (event.shiftKey && document.activeElement === first) {
-    event.preventDefault();
-    last.focus();
-  } else if (!event.shiftKey && document.activeElement === last) {
-    event.preventDefault();
-    first.focus();
-  }
+order.querySelector(".order-close").addEventListener("click", () => order.close());
+order.addEventListener("click", event => {
+  if (event.target !== order) return;
+  const bounds = order.getBoundingClientRect();
+  if (event.clientX < bounds.left || event.clientX > bounds.right ||
+      event.clientY < bounds.top || event.clientY > bounds.bottom) order.close();
 });
 
 for (const [id, label, url] of [
@@ -113,27 +84,6 @@ for (const [id, label, url] of [
 }
 
 const form = document.getElementById("y2a69jfz");
-const province = form.elements.province_id;
-const district = form.elements.district_id;
-const commune = form.elements.commune_id;
-const addresses = window.shippingAddresses;
-
-function setAddressOptions(select, entries) {
-  select.options.length = 1;
-  select.selectedIndex = 0;
-  for (const [id, entry] of Object.entries(entries ?? {})) {
-    if (entry?.name) select.add(new Option(entry.name, id));
-  }
-}
-
-setAddressOptions(province, addresses);
-province.addEventListener("change", () => {
-  setAddressOptions(district, addresses[province.value]);
-  setAddressOptions(commune);
-});
-district.addEventListener("change", () => {
-  setAddressOptions(commune, addresses[province.value]?.[district.value]);
-});
 form.addEventListener("submit", event => {
   event.preventDefault();
   document.getElementById("order-status").textContent =
