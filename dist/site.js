@@ -76,10 +76,45 @@ order.addEventListener("click", event => {
 });
 
 const form = document.getElementById("y2a69jfz");
-form.addEventListener("submit", event => {
+const orderStatus = document.getElementById("order-status");
+const submitOrder = form.querySelector('[type="submit"]');
+// Paste the deployed Google Apps Script web app URL ending in /exec here.
+const GOOGLE_SCRIPT_URL = "";
+
+form.addEventListener("submit", async event => {
   event.preventDefault();
-  document.getElementById("order-status").textContent =
-    "Đây là bản xem thử. Đơn hàng chưa được gửi.";
+  if (submitOrder.disabled) return;
+  if (!GOOGLE_SCRIPT_URL.trim()) {
+    orderStatus.textContent = "Form chưa được kết nối để nhận đơn.";
+    return;
+  }
+
+  const data = new FormData(form);
+  const body = new URLSearchParams({
+    full_name: data.get("full_name").trim(),
+    phone_number: data.get("phone_number").trim(),
+    address: data.get("address").trim(),
+    package: data.get("package")
+  });
+  if (!body.get("full_name") || !body.get("address")) {
+    orderStatus.textContent = "Vui lòng điền họ tên và địa chỉ giao hàng.";
+    return;
+  }
+
+  submitOrder.disabled = true;
+  orderStatus.textContent = "Đang gửi đơn hàng…";
+  try {
+    const response = await fetch(GOOGLE_SCRIPT_URL.trim(), { method: "POST", body });
+    if (!response.ok || (await response.json()).ok !== true) {
+      throw new Error("Order was not confirmed");
+    }
+    form.reset();
+    orderStatus.textContent = "Đã gửi đơn hàng.";
+  } catch {
+    orderStatus.textContent = "Chưa xác nhận được đơn hàng. Vui lòng kiểm tra lại trước khi gửi lại.";
+  } finally {
+    submitOrder.disabled = false;
+  }
 });
 
 function fitLayout() {
