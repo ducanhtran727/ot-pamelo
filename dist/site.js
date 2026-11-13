@@ -61,8 +61,10 @@ updateCountdown();
 setInterval(updateCountdown, 1000);
 
 const order = document.getElementById("order-dialog");
-for (const id of ["w-8brm836h", "w-iaxhhk0l"]) {
-  makeButton(document.getElementById(id), "", () => order.showModal());
+for (const trigger of document.querySelectorAll("[data-open-order]")) {
+  const openOrder = () => order.showModal();
+  if (trigger instanceof HTMLButtonElement) trigger.addEventListener("click", openOrder);
+  else makeButton(trigger, "", openOrder);
 }
 
 order.querySelector(".order-close").addEventListener("click", () => order.close());
@@ -72,16 +74,6 @@ order.addEventListener("click", event => {
   if (event.clientX < bounds.left || event.clientX > bounds.right ||
       event.clientY < bounds.top || event.clientY > bounds.bottom) order.close();
 });
-
-for (const [id, label, url] of [
-  ["w-3tw80v1n", "Tư vấn qua Zalo", "https://zalo.me/0388403111"],
-  ["w-uzmvyu2q", "Tư vấn qua Zalo", "https://zalo.me/0388403111"],
-  ["w-905tqad3", "Gọi 0388403111", "tel:0388403111"],
-  ["w-c0v37bcx", "Gọi 0388403111", "tel:0388403111"]
-]) {
-  const element = document.getElementById(id);
-  makeButton(element, label, () => { window.location.href = url; });
-}
 
 const form = document.getElementById("y2a69jfz");
 form.addEventListener("submit", event => {

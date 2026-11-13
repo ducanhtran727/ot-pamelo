@@ -156,3 +156,97 @@ body:has(#order-dialog[open]) {
     transition: none !important;
   }
 }
+
+.order-bar {
+  position: fixed;
+  z-index: 20;
+  inset: auto 0 0;
+  margin-inline: auto;
+  width: 420px;
+  padding: 8px 12px max(8px, env(safe-area-inset-bottom));
+  background: #fff;
+  box-shadow: 0 -2px 12px rgb(0 0 0 / 12%);
+}
+
+.order-bar .order-submit {
+  width: 100%;
+  font: 800 16px "Open Sans", sans-serif;
+}
+
+.pageview {
+  padding-bottom: 68px;
+}
+
+/* Cover the baked-in contact lines on the source posters. */
+#w-jzvgamuh .gallery-view-item[data-index="0"]::after,
+#w-222mpcs4 .image-background::after,
+#w-wtmfcbnz .image-background::after,
+#w-155h7qod .image-background::before,
+#w-155h7qod .image-background::after,
+#w-i6n3so49 .image-background::after,
+#w-o6ttcls2 .image-background::after {
+  position: absolute;
+  content: "";
+  pointer-events: none;
+  border-radius: 999px;
+  background: #183d19;
+  left: var(--cover-left);
+  top: var(--cover-top);
+  width: var(--cover-width);
+  height: var(--cover-height);
+}
+
+#w-jzvgamuh .gallery-view-item[data-index="0"] {
+  --cover-left: 4.8%;
+  --cover-top: 15%;
+  --cover-width: 17%;
+  --cover-height: 3.3%;
+}
+
+#w-222mpcs4 .image-background {
+  --cover-left: 3.8%;
+  --cover-top: 25.2%;
+  --cover-width: 20%;
+  --cover-height: 7%;
+}
+
+#w-wtmfcbnz .image-background {
+  --cover-left: 4.4%;
+  --cover-top: 15.3%;
+  --cover-width: 18.8%;
+  --cover-height: 3.4%;
+}
+
+#w-155h7qod .image-background::before {
+  --cover-left: 5.7%;
+  --cover-top: 10.8%;
+  --cover-width: 15.5%;
+  --cover-height: 3%;
+}
+
+#w-155h7qod .image-background::after {
+  --cover-left: 66.7%;
+  --cover-top: 92.7%;
+  --cover-width: 32.6%;
+  --cover-height: 6.8%;
+  background: #16491d;
+  border-radius: 5px;
+}
+
+#w-i6n3so49 .image-background {
+  --cover-left: 3.1%;
+  --cover-top: 86.1%;
+  --cover-width: 93.8%;
+  --cover-height: 7.8%;
+}
+
+#w-o6ttcls2 .image-background {
+  --cover-left: 47%;
+  --cover-top: 76%;
+  --cover-width: 34%;
+  --cover-height: 9%;
+}
+
+#w-o6ttcls2 .image-background::after {
+  background: #d9ed9a;
+}
