@@ -80,7 +80,7 @@ const form = document.getElementById("y2a69jfz");
 const orderStatus = document.getElementById("order-status");
 const submitOrder = form.querySelector('[type="submit"]');
 // Paste the deployed Google Apps Script web app URL ending in /exec here.
-const GOOGLE_SCRIPT_URL = "";
+const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbw1Ezvp0AQog43yB082N-V3JrlJyEyIa7MvL04RLcmHnsVfUWxjLf_gqSa30aPn93Ju/exec";
 
 form.addEventListener("submit", async event => {
   event.preventDefault();
